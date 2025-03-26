@@ -21,8 +21,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
+@NamedQuery(name = Student.GET_ALL_STUDENTS, query = "Select s from Student s")
 public class Student {
 
+	public static final String GET_ALL_STUDENTS = "Student.getAllStudents";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_seq")
 	private Long id;
@@ -35,6 +38,10 @@ public class Student {
 
 	private String jmbg;
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "student_id")
+	private Set<Telefon> telefoni;
+	
 	public Student() {
 		super();
 	}
@@ -86,6 +93,14 @@ public class Student {
 
 	public void setJmbg(String jmbg) {
 		this.jmbg = jmbg;
+	}
+	
+	public Set<Telefon> getTelefoni() {
+		return telefoni;
+	}
+
+	public void setTelefoni(Set<Telefon> telefoni) {
+		this.telefoni = telefoni;
 	}
 
 	@Override
