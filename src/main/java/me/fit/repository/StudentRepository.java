@@ -7,7 +7,7 @@ import jakarta.transaction.Transactional;
 import me.fit.model.Student;
 
 @Dependent
-public class StudentService {
+public class StudentRepository {
 
 	@Inject
 	private EntityManager em;
