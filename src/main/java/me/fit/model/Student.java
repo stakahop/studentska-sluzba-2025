@@ -21,10 +21,15 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
-@NamedQuery(name = Student.GET_ALL_STUDENTS, query = "Select s from Student s")
+@NamedQueries({
+	@NamedQuery(name = Student.GET_ALL_STUDENTS, query = "Select s from Student s"),
+	@NamedQuery(name = Student.GET_STUDENTS_BY_NAME, query = "Select s from Student s where s.ime = :name"),
+})
+
 public class Student {
 
 	public static final String GET_ALL_STUDENTS = "Student.getAllStudents";
+	public static final String GET_STUDENTS_BY_NAME = "Student.getStudentsByName";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_seq")
