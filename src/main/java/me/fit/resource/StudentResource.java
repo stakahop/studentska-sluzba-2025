@@ -3,6 +3,7 @@ package me.fit.resource;
 import java.util.List;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import io.quarkus.scheduler.Scheduled;
 import jakarta.inject.Inject;
@@ -16,13 +17,18 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import me.fit.exception.StudentException;
 import me.fit.model.Student;
+import me.fit.model.client.TimeResponse;
 import me.fit.repository.StudentRepository;
+import me.fit.restclient.TimeClient;
 
 @Path("/student/")
 public class StudentResource {
 
 	@Inject
 	private StudentRepository studentRepository;
+	
+	@RestClient
+	private TimeClient timeClient;
 	
 	@ConfigProperty(name = "greeting.message") 
 	String message;
@@ -58,5 +64,14 @@ public class StudentResource {
 
 		return Response.ok().entity(students).build();
 	}
-	
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("getTime")
+	public Response getTime(@QueryParam(value = "timeZone") String timeZone) {
+
+		TimeResponse time = timeClient.getTime(timeZone);
+
+		return Response.ok().entity(time).build();
+	}
 }
