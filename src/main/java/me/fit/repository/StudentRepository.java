@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import me.fit.exception.StudentException;
 import me.fit.model.Student;
 import me.fit.model.Telefon;
+import me.fit.model.client.StudentPredmet;
 
 @Dependent
 public class StudentRepository {
@@ -48,6 +49,11 @@ public class StudentRepository {
 		}
 		
 		return students;
+	}
+	
+	@Transactional
+	public StudentPredmet createStudentPredmet(StudentPredmet s) {
+		return em.merge(s);
 	}
 
 }

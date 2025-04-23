@@ -17,6 +17,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import me.fit.exception.StudentException;
 import me.fit.model.Student;
+import me.fit.model.client.StudentPredmet;
 import me.fit.model.client.TimeResponse;
 import me.fit.repository.StudentRepository;
 import me.fit.restclient.TimeClient;
@@ -73,5 +74,15 @@ public class StudentResource {
 		TimeResponse time = timeClient.getTime(timeZone);
 
 		return Response.ok().entity(time).build();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("createStudentPredmet")
+	public Response getTime(StudentPredmet s) {
+
+		StudentPredmet student =  studentRepository.createStudentPredmet(s);
+		
+		return Response.ok().entity(student).build();
 	}
 }
